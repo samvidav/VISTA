@@ -1,0 +1,203 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: UniProt.ws objects and their related methods and functions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for UniProt.ws-objects {UniProt.ws}"><tr><td>UniProt.ws-objects {UniProt.ws}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>UniProt.ws objects and their related methods and functions</h2>
+
+<h3>Description</h3>
+
+<p><code>UniProt.ws</code> is the base class for interacting with the Uniprot
+web services from Bioconductor.
+</p>
+<p>In much the same way as an <code>AnnotationDb</code> object allows acces to
+select for many other annotation packages, <code>UniProt.ws</code> is meant
+to allow usage of <code>select</code> methods and other supporting methods
+to enable the easy extraction of data from the Uniprot web services.
+</p>
+<p><code>select</code>, <code>columns</code> and <code>keys</code> are used together to
+extract data via an <code>UniProt.ws</code> object. 
+</p>
+<p><code>columns</code> shows which kinds of data can be returned for the
+<code>UniProt.ws</code> object.
+</p>
+<p><code>keytypes</code> allows the user to discover which keytypes can be
+passed in to <code>select</code> or <code>keys</code> via the <code>keytype</code>
+argument.
+</p>
+<p><code>keys</code> returns keys for the database contained in the
+<code>UniProt.ws</code> object .  By default it will return the primary keys
+for the database, which are UNIPROTKB keys, but if used with the
+<code>keytype</code> argument, it will return the keys from that keytype.
+</p>
+<p><code>select</code> will retrieve the data as a data.frame based on
+parameters for selected <code>keys</code> and <code>columns</code> and <code>keytype</code>
+arguments.
+</p>
+<p>The <code>UniProt.ws</code> will be loaded whenever you load the
+<code>UniProt.ws</code> package.  This object will be set up to retrieve
+information from Homo sapiens by default, but this value can be
+changed to any of the species supported by Uniprot.  The
+<code>species</code> and <code>taxId</code> methods allow users to see what
+species is currently being accessed, and <code>taxId&lt;-</code> allows them to
+change this value.
+</p>
+<p><code>species</code> shows the genus and species label currently attached to
+the <code>UniProt.ws</code> objects database.
+</p>
+<p><code>taxId</code> shows the NCBI taxonomy ID currently attached to
+the <code>AnnotationDb</code> objects database.  Using the equivalently
+names replace method (<code>taxId&lt;-</code>) allows the user to change the
+taxon ID, and the species represented along with it.
+</p>
+<p><code>availableUniprotSpecies</code> is a helper function to list out the
+available Species along with their official taxonomy IDs that are
+available by Uniprot.  Because there are so many species represented
+at UniProt, there is also a pattern argument that can be used to
+restrict the range of things returned to be only those whose species
+names match the searth term.  Please remember when using this argument
+that the Genus is always capitalized and the species never is.
+</p>
+<p><code>lookupUniprotSpeciesFromTaxId</code> is another helper that will look
+up the species of any tax ID that is supported by Uniprot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+  columns(x)
+  keytypes(x)
+  select(x, keys, columns, keytype, ...)
+  species(object)
+  taxId(x)
+
+  availableUniprotSpecies(pattern, n=Inf)
+  lookupUniprotSpeciesFromTaxId(taxId)
+  UniProt.ws(taxId, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x</code></td>
+<td>
+<p>the <code>UniProt.ws</code> object. </p>
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+<p>the <code>UniProt.ws</code> object. </p>
+</td></tr>
+<tr valign="top"><td><code>keys</code></td>
+<td>
+<p>the keys to select records for from the database.  All possible 
+keys are returned by using the <code>keys</code> method.</p>
+</td></tr>
+<tr valign="top"><td><code>columns</code></td>
+<td>
+<p>the columns or kinds of things that can be retrieved
+from the database.  As with <code>keys</code>, all possible columns are
+returned by using the <code>columns</code> method.</p>
+</td></tr>
+<tr valign="top"><td><code>keytype</code></td>
+<td>
+<p>the keytype that matches the keys used.  For the
+<code>select</code> methods, this is used to indicate the kind of ID being used
+with the keys argument. For the <code>keys</code> method this is used to
+indicate which kind of keys are desired from <code>keys</code>
+</p>
+</td></tr>
+<tr valign="top"><td><code>pattern</code></td>
+<td>
+<p>A string passed in to limit the results</p>
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+<p>the maximim number of results to return.</p>
+</td></tr>
+<tr valign="top"><td><code>taxId</code></td>
+<td>
+<p>a taxonomy id</p>
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+<p>other arguments</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p><code>keys</code>,<code>columns</code>,<code>keytypes</code>, <code>species</code> and
+<code>lookupUniprotSpeciesFromTaxId</code> each return a character vector of
+possible values.
+</p>
+<p><code>taxId</code> returns a numeric value that corresponds to the taxonomy
+ID.
+</p>
+<p><code>select</code> and <code>availableUniprotSpecies</code> each return a
+data.frame.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Marc Carlson</p>
+
+
+<h3>See Also</h3>
+
+<p><code>select</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Make a UniProt.ws object
+up &lt;- UniProt.ws(taxId=9606)
+
+## look at the object
+up
+
+## get the current species
+species(up)
+
+## look up available species with their tax ids
+availableUniprotSpecies("musculus")
+
+## get the current taxId
+taxId(up)
+
+## look up the species that goes with a tax id
+lookupUniprotSpeciesFromTaxId(9606)
+
+## set the taxId to something else
+taxId(up) &lt;- 10090
+up
+
+## list the possible key types
+head(keytypes(up))
+
+## list the columns that can be retreived
+head(columns(up))
+
+## list all possible keys of type entrez gene ID.
+## (this process is not instantaneous)
+if(interactive()){
+  egs = keys(up, "ENTREZ_GENE")
+}
+
+## use select to extract some data
+res &lt;- select(up, 
+              keys = c("22627","22629"), 
+              columns = c("PDB","UNIGENE","SEQUENCE"),
+              keytype = "ENTREZ_GENE")
+head(res)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>UniProt.ws</em> version 2.22.0 <a href="00Index.html">Index</a>]</div>
+</body></html>

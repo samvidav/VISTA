@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml"><head><title>R: Utility functions</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body>
+
+<table width="100%" summary="page for utilities {UniProt.ws}"><tr><td>utilities {UniProt.ws}</td><td style="text-align: right;">R Documentation</td></tr></table>
+
+<h2>Utility functions</h2>
+
+<h3>Description</h3>
+
+<p>UniProt uses custom coding of organism names from which protein sequences they
+store. These taxon names are used also in the protein names (not in the UniProt
+IDs!). These functions help to translate those names to standard scientific
+(Latin) taxon names and other useful identifiers.
+</p>
+
+<ul>
+<li><p>taxname2species(): 
+converts UniProt taxonomy names to scientific species names
+
+</p>
+</li>
+<li><p>taxname2taxid():
+converts UniProt taxonomy names to NCBI Taxonomy IDs
+
+</p>
+</li>
+<li><p>taxname2domain():
+converts UniProt taxonomy names to the following taxonomical domains:
+'A' for archaea (=archaebacteria)\
+'B' for bacteria (=prokaryota or eubacteria)\
+'E' for eukaryota (=eukarya)\
+'V' for viruses and phages (=viridae)\
+'O' for others (such as artificial sequences)\
+
+</p>
+</li>
+<li><p>updatespecfile():
+The updatespecfile helper function attempts to download the
+current version of the controlled vocabulary of species table from
+<a href="http://www.uniprot.org/docs/speclist">UniProt controlled
+vocabulary of species</a>. If it fails to download,
+an archived version of the table in (in extdata/) will be used.
+
+</p>
+</li></ul>
+
+
+
+<h3>Usage</h3>
+
+<pre>
+taxname2species(taxname, specfile) 
+taxname2taxid(taxname, specfile) 
+taxname2domain(taxname, specfile) 
+updatespecfile()
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>taxname</code></td>
+<td>
+
+<p>Character string up to 6 uppercase characters, like HUMAN, MOUSE, or 
+AERPX. Also works for a vector of such taxon names.
+</p>
+</td></tr>
+<tr valign="top"><td><code>specfile</code></td>
+<td>
+
+<p>An optional local file where speclist.RData is saved from UniProt.org. 
+When <code>specfile</code> is missing, a cached file from the
+extdata/ package directory is used.
+</p>
+</td></tr>
+</table>
+
+
+<h3>Value</h3>
+
+<p>Function <code>taxname2species</code> returns a character vector of scientific taxon
+names matching to the UniProt taxon names supplied as <code>taxname</code>.
+</p>
+<p>Function <code>taxname2taxid</code> returns a numeric vector of Taxonomy IDs 
+matching to the UniProt taxon names supplied as <code>taxname</code>.
+</p>
+<p>Function <code>taxname2domain</code> returns a character vector of one letter domain 
+symbols matching to the UniProt taxon names supplied as <code>taxname</code>.
+</p>
+<p>Function <code>updatespecfile</code> returns a file location where specfile.txt is
+downloaded. If the download fails, path is the location of the archived 
+version in the package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Csaba Ortutay</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="http://www.uniprot.org/docs/speclist">UniProt controlled vocabulary of 
+species</a>, which defines the taxon names.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+taxname2species("PIG")
+taxname2species(c("PIG","HUMAN","TRIHA"))
+
+taxname2taxid("PIG")
+taxname2taxid(c("PIG","HUMAN","TRIHA"))
+
+taxname2domain("PIG")
+taxname2domain(c("PIG","HUMAN","TRIHA"))
+
+newspecfile &lt;- updatespecfile()
+taxname2domain("PIG", specfile = newspecfile)
+taxname2domain(c("PIG","HUMAN","TRIHA"), specfile = newspecfile)
+</pre>
+
+<hr /><div style="text-align: center;">[Package <em>UniProt.ws</em> version 2.22.0 <a href="00Index.html">Index</a>]</div>
+</body></html>
